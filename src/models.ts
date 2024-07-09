@@ -1,5 +1,6 @@
-import * as jsonfile from 'jsonfile';
-
+import * as jsonfile from "jsonfile";
+import "./pelis.json"
+//JOla
 type SearchOptions = { title?: string; tag?: string };
 class Peli {
   id: number
@@ -20,6 +21,7 @@ class PelisCollection {
   async getById(id: number): Promise<Peli> {
     const peliculas = await this.getAll()
     const pelis = peliculas.find(peli => peli.id === id)
+    console.log("Peli",pelis)
     return pelis
   }
   async add(peli: Peli): Promise<boolean> {

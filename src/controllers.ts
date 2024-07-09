@@ -24,15 +24,18 @@ class PelisController {
 
   async get(options?: Options): Promise<any> {
     //Si el objeto tiene la propiedad id, debe devolver la película con ese id.
-    console.log(options)
+    console.log("OPTIONS: ",options)
+    if(!options){
+      return await this.peliculas.getAll()
+    }
+    
     if (options.id && options.id != 0) {
-      const respuesta: Peli = await this.peliculas.getById(options.id).then(resp => {
-        return resp
-      })
-      return respuesta
-    }else if('title' in options.search && !('tag' in options.search)){
+      const respuesta: Peli = await this.peliculas.getById(options.id)
+      return  respuesta
+    }
+    console.log(options)
+    if(options.search.title && !options.search.tag){
       const respuestaTitle: Peli[] = await this.peliculas.search(options.search).then(resp => {
-        options.search.title = ""
         return resp})
         let peliculasFiltradas: Peli[] = respuestaTitle.filter(peli => peli.title.includes(options.search.title));
         return peliculasFiltradas
